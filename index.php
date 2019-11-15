@@ -12,20 +12,57 @@
 </head>
 
 <body>
+<?
+session_start();
+require "functions.php";
 
+if(isset($_POST['quit'])){
+	unset($_SESSION['manager']);
+}
+
+if(isset($_POST['manager'])){
+	$_SESSION['manager'] = $_POST['manager'];
+}
+
+if(isset($_SESSION['manager'])){
+	$user = $_SESSION['manager'];
+}
+
+?>
 <script src = "js/code.js"></script>
 
 <div id = "cont">
 	<br>
 	<h1>Заказы</h1>
-
+<?
+if(isset($user)){
+?>	
 	<div id = "enter">
 		<form method="post">
-			<input type="text" name="manager" placeholder = "Введите свою фамилию">	
+			<?=$user;?> &nbsp;
+			<input type="submit" name = "quit" value= "Выйти" >
+		</form>
+	</div>	
+<?	
+}
+else{
+?>
+	<div id = "enter">
+		<form method="post">
+			<select name="manager">	
+				<option value = "Евгения">Евгения</option>
+				<option value = "Вадим">Вадим</option>
+				<option value = "Сергей">Сергей</option>
+				<option value = "Максим">Максим</option>
+				<option value = "Иван">Иван</option>
+				<option value = "Михаил">Михаил</option>
+			</select>	
 			<input type="submit" value = "Войти">	
 		</form>	
 	</div>
-
+<?
+}
+?>
 	<table>
 		<tr>
 			<td></td>

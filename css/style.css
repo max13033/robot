@@ -1,0 +1,38 @@
+body{
+	margin:0;
+}
+a{
+	text-decoration: none;
+}
+
+#cont{
+	width: 80%;
+	margin: auto;
+	background-color: #efe;
+	text-align: center;
+}
+#enter{
+	background-color: #eef;
+	width: 250px;
+	height: 60px;
+	font: 20pt bold;
+	padding-top: 5px;
+	box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

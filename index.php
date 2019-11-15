@@ -35,34 +35,13 @@ if(isset($_SESSION['manager'])){
 	<br>
 	<h1>Заказы</h1>
 <?
-if(isset($user)){
-?>	
-	<div id = "enter">
-		<form method="post">
-			<?=$user;?> &nbsp;
-			<input type="submit" name = "quit" value= "Выйти" >
-		</form>
-	</div>	
-<?	
-}
-else{
+
+log_in($user);
+
 ?>
-	<div id = "enter">
-		<form method="post">
-			<select name="manager">	
-				<option value = "Евгения">Евгения</option>
-				<option value = "Вадим">Вадим</option>
-				<option value = "Сергей">Сергей</option>
-				<option value = "Максим">Максим</option>
-				<option value = "Иван">Иван</option>
-				<option value = "Михаил">Михаил</option>
-			</select>	
-			<input type="submit" value = "Войти">	
-		</form>	
-	</div>
-<?
-}
-?>
+<div id = "add">
+	<a href = "index.php?add=1">Добавить заказ</a>
+</div>	
 	<table>
 		<tr>
 			<td></td>
@@ -81,13 +60,6 @@ else{
 
 
 	</table>
-
-
-
-
-
-
-
 
 </div>
 

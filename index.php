@@ -39,7 +39,7 @@ if(isset($_SESSION['manager'])){
 
 log_in($user);
 
-if(isset($_POST['status'])){
+if(isset($_POST['insert'])){
 	date_default_timezone_set('Europe/Moscow');
 	$date = strval(date("d.m.Y H:i"));
 	$status = $_POST['status'];
@@ -56,8 +56,29 @@ if(isset($_POST['status'])){
 	VALUES ('NULL', '$date', '$status', '$product', '$client', '$tel', '$paid', '$sum', '$place', '$user', '$comment')";
 	$connect->query($q_text);
 }
-if(isset($_GET['del'])){
-	del($_GET['del']);
+if(isset($_POST['save_update'])){
+	$id = $_POST['save_update'];
+	$status = $_POST['status'];
+	$product = $_POST['product'];
+	$client = $_POST['client'];
+	$tel = $_POST['tel'];
+	$paid = $_POST['paid'];
+	$sum = $_POST['sum'];
+	$place = $_POST['place'];
+	$comment = $_POST['comment'];
+
+	$connect->query("UPDATE `orders` SET 
+		`status` = '$status', 
+		`product` = '$product', 
+		`client` = '$client', 
+		`tel` = '$tel', 
+		`paid` = '$paid',
+		`sum` = '$sum',
+		`place` = '$place',
+		`comment` = '$comment' WHERE `id` = '$id' ");
+}
+if(isset($_POST['del'])){
+	del($_POST['del']);
 }
 ?>
 
@@ -81,52 +102,9 @@ if(isset($_GET['del'])){
 			<td colspan="2">Комментарий</td>
 			<td>Правки</td>
 		</tr>
-
-		<form method = "post">
-
-			<tr>
-				<td colspan="3">
-					<select name = "status">
-						<option value = "Ожидает поставки">Ожидает поставки </option>
-						<option value = "В пункте выдачи">В пункте выдачи </option>
-						<option value = "Выдан">Выдан</option>
-					</select>	
-				</td>
-
-				<td>
-					<input type="text" name = "product">
-				</td>
-
-				<td>	<input type="text" name="client" >	</td>
-
-				<td>	<input type="text" name="tel" size = "11">	</td>
-				<td>
-					<select name = "paid">
-						<option value="Не оплачен">Не оплачен</option>
-						<option value="Оплачен">Оплачен</option>
-					</select>
-				</td>
-
-				<td> <input type="text" name="sum" size = "4">	</td>
-
-				<td>
-					<select name = "place">
-						<option value = "Магазин">Магазин</option>
-						<option value = "КП">КП</option>
-						<option value = "Доставка">Доставка</option>
-					</select>
-				</td>
-
-				<td colspan="2">
-					<textarea name ="comment" placeholder="Оставить комментарий" ></textarea>
-				</td>
-				<td>
-					<input type="submit" value = "Сохранить">
-				</td>
-			</tr>
-		</form>
-
-
+<?
+require "form.php";
+?>
 		<tr>
 			<td colspan="12" class = "header"> 
 				<br><br>Текущие заказы<br>
@@ -148,6 +126,8 @@ if(isset($_GET['del'])){
 			<td>Правки</td>
 		</tr>
 <?
+
+
 $query = $connect->query("SELECT * FROM `orders` ORDER BY `id` DESC");
 $num = $query->num_rows;
 for($i = 1; $i <=$num; $i++){
@@ -164,6 +144,61 @@ for($i = 1; $i <=$num; $i++){
 	$place = $arr['place'];
 	$manager = $arr['manager'];
 	$comment = $arr['comment'];
+
+	if(	
+		(isset($_POST['update'])) 
+		&& 
+		($_POST['update'] == $id) 
+		){
+?>
+		<form method = "post">
+
+			<tr>
+				<td colspan="3">
+					<select name = "status">
+						<option value = "Ожидает поставки">Ожидает поставки </option>
+						<option value = "В пункте выдачи">В пункте выдачи </option>
+						<option value = "Выдан">Выдан</option>
+					</select>	
+				</td>
+
+				<td>
+					<input type="text" name = "product" value = "<?=$product?>">
+				</td>
+
+				<td>	<input type="text" name="client" value = "<?=$client?>">	</td>
+
+				<td>	<input type="text" name="tel" size = "11" value = "<?=$tel?>">	</td>
+				<td>
+					<select name = "paid">
+						<option value="Не оплачен">Не оплачен</option>
+						<option value="Оплачен">Оплачен</option>
+					</select>
+				</td>
+
+				<td> <input type="text" name="sum" size = "4" value = "<?=$sum?>">	</td>
+
+				<td>
+					<select name = "place">
+						<option value = "Магазин">Магазин</option>
+						<option value = "КП">КП</option>
+						<option value = "Доставка">Доставка</option>
+					</select>
+				</td>
+
+				<td colspan="2">
+					<textarea name ="comment" placeholder="Оставить комментарий" >	<?=$comment?>	</textarea>
+				</td>
+				<td>
+					<input type="hidden" name = "save_update" value = "<?=$id?>">
+					<input type="submit" value = "Сохранить">
+				</td>
+			</tr>
+		</form>
+
+<?		
+	}
+	else{
 ?>
 		<tr>
 			<td><?=$id?></td>
@@ -178,17 +213,27 @@ for($i = 1; $i <=$num; $i++){
 			<td><?=$manager?></td>
 			<td><?=$comment?></td>
 			<td>
-				<a href = "index.php?update=<?=$id?>" >Редактировать</a> <br>
-				<a href = "index.php?del=<?=$id?>" >Удалить</a> <br>
+				<form method = "post">
+					<input type="hidden" name="update" value="<?=$id?>">
+					<input type="submit" value="Редактировать" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?> >
+				</form> 
+
+				<form method = "post">
+					<input type="hidden" name="del" value="<?=$id?>">
+					<input type="submit" value="Удалить" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?>>
+				</form>
+
+				
 			</td>
 		</tr>
 
 <?
-}
+	} 	//	else	
+}	//	for
 ?>
 
 	</table>
-
+<br><br><br><br><br>
 </div>
 
 </body>

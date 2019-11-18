@@ -25,7 +25,10 @@ function log_in($user){
 	}
 }
 
-
+function del($id){
+	global $connect;
+	$connect->query("DELETE FROM `orders` WHERE `id` = '$id' ");
+}
 
 
 

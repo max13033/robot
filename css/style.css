@@ -1,13 +1,13 @@
 body{
 	margin:0;
+	font-family: arial;
 }
 a{
-	/*text-decoration: none;*/
-	font: 16pt bold;
+
 }
 
 #cont{
-	width: 80%;
+	width: 96%;
 	margin: auto;
 	background-color: #efe;
 	text-align: center;
@@ -21,8 +21,14 @@ a{
 	box-sizing: border-box;
 	/*float: left;*/
 }
-
-
+.header{
+	font-size: 20pt; 
+	font-weight: bold; 
+	font-family: arial
+}
+td{
+	border: 1px solid black;
+}
 
 
 

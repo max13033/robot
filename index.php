@@ -1,3 +1,4 @@
+<?session_start();?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -13,7 +14,6 @@
 
 <body>
 <?
-session_start();
 require "functions.php";
 require "connect.php";
 

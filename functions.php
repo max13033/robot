@@ -25,19 +25,13 @@ function log_in($user){
 	}
 }
 
-function del($id){
+function cancel($id){
 	global $connect;
 	$connect->query("UPDATE `orders` SET `status` = 'Отменён' WHERE `id` = '$id' ");
 }
-
-
-
-
-
-
-
-
-
-
+function del($id){
+	global $connect;
+	$connect->query("DELETE FROM `orders` WHERE `id` = '$id' ");
+}
 
 ?>

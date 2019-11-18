@@ -80,6 +80,9 @@ if(isset($_POST['save_update'])){
 if(isset($_POST['del'])){
 	del($_POST['del']);
 }
+if(isset($_POST['cancel'])){
+	cancel($_POST['cancel']);
+}
 ?>
 
 
@@ -205,7 +208,8 @@ for($i = 1; $i <=$num; $i++){
 					</select>
 				</td>
 
-				<td colspan="2">
+				<td><?=$manager?>
+				<td>
 					<textarea name ="comment" placeholder="Оставить комментарий" >	<?=$comment?>	</textarea>
 				</td>
 				<td>
@@ -239,9 +243,16 @@ for($i = 1; $i <=$num; $i++){
 <?
 			if($status!='Отменён'){				
 ?>				<form method = "post">
-					<input type="hidden" name="del" value="<?=$id?>">
-					<input type="submit" value="Отменить" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?>>
+					<input type="hidden" name="cancel" value="<?=$id?>">
+					<input type="submit" value="Отменить" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете отменять чужие заказы' ";} ?>>
 				</form>
+<?			}
+			else{			?>
+				<form method = "post">
+					<input type="hidden" name="del" value="<?=$id?>">
+					<input type="submit" value="Удалить" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете удалять чужие заказы' ";} ?>>
+				</form>
+
 <?			}			?>
 				
 			</td>

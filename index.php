@@ -145,6 +145,24 @@ for($i = 1; $i <=$num; $i++){
 	$manager = $arr['manager'];
 	$comment = $arr['comment'];
 
+	switch ($status) {
+		case 'Ожидает поставки':
+			$color = "faa";
+			break;
+
+		case 'В пункте выдачи':
+			$color = "ffa";
+			break;
+
+		case 'Выдан':
+			$color = "afa";
+			break;		
+		
+		default:
+			$color = "fff";
+			break;
+	}
+
 	if(	
 		(isset($_POST['update'])) 
 		&& 
@@ -159,6 +177,7 @@ for($i = 1; $i <=$num; $i++){
 						<option value = "Ожидает поставки">Ожидает поставки </option>
 						<option value = "В пункте выдачи">В пункте выдачи </option>
 						<option value = "Выдан">Выдан</option>
+						<option value = "Отменён">Отменён</option>
 					</select>	
 				</td>
 
@@ -200,7 +219,7 @@ for($i = 1; $i <=$num; $i++){
 	}
 	else{
 ?>
-		<tr>
+		<tr style = "background-color: #<?=$color?>;">
 			<td><?=$id?></td>
 			<td><?=$date?></td>
 			<td><?=$status?></td>
@@ -217,12 +236,13 @@ for($i = 1; $i <=$num; $i++){
 					<input type="hidden" name="update" value="<?=$id?>">
 					<input type="submit" value="Редактировать" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?> >
 				</form> 
-
-				<form method = "post">
+<?
+			if($status!='Отменён'){				
+?>				<form method = "post">
 					<input type="hidden" name="del" value="<?=$id?>">
-					<input type="submit" value="Удалить" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?>>
+					<input type="submit" value="Отменить" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?>>
 				</form>
-
+<?			}			?>
 				
 			</td>
 		</tr>

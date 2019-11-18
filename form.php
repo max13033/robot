@@ -39,7 +39,7 @@
 		</td>
 		<td>
 			<input type="hidden" name = "insert" value="1">
-			<input type="submit" value = "Сохранить">
+			<input type="submit" value = "Сохранить" <?if(!isset($user)){echo 'disabled title = "Авторизируйтесь" ';}?>>
 		</td>
 	</tr>
 </form>

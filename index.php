@@ -157,6 +157,10 @@ for($i = 1; $i <=$num; $i++){
 			$color = "ffa";
 			break;
 
+		case 'В пункте выдачи, клиент оповещён':
+			$color = "cf7";
+			break;
+
 		case 'Выдан':
 			$color = "afa";
 			break;		
@@ -179,6 +183,7 @@ for($i = 1; $i <=$num; $i++){
 					<select name = "status">
 						<option value = "Ожидает поставки">Ожидает поставки </option>
 						<option value = "В пункте выдачи">В пункте выдачи </option>
+						<option value = "В пункте выдачи, клиент оповещён">В пункте выдачи, клиент оповещён</option>
 						<option value = "Выдан">Выдан</option>
 						<option value = "Отменён">Отменён</option>
 					</select>	
@@ -238,7 +243,7 @@ for($i = 1; $i <=$num; $i++){
 			<td>
 				<form method = "post">
 					<input type="hidden" name="update" value="<?=$id?>">
-					<input type="submit" value="Редактировать" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?> >
+					<input type="submit" value="Редак-ть" <?if($user != $manager && $user != "Евгения"){echo "disabled title = 'Вы не можете редактировать чужие заказы' ";} ?> >
 				</form> 
 <?
 			if($status!='Отменён'){				

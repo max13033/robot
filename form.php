@@ -5,6 +5,7 @@
 			<select name = "status">
 				<option value = "Ожидает поставки">Ожидает поставки </option>
 				<option value = "В пункте выдачи">В пункте выдачи </option>
+				<option value = "В пункте выдачи, клиент оповещён">В пункте выдачи, клиент оповещён</option>
 				<option value = "Выдан">Выдан</option>
 				<option value = "Отменён">Отменён</option>
 			</select>	
